@@ -41,6 +41,7 @@ func newRootCmd(ui *rwi.RWI, args []string) *cobra.Command {
 	rootCmd.AddCommand(newVersionCmd(ui))
 	rootCmd.AddCommand(newSearchCmd(ui))
 	rootCmd.AddCommand(newLookupCmd(ui))
+	rootCmd.AddCommand(newReviewCmd(ui))
 
 	return rootCmd
 }

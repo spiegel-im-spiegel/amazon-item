@@ -18,7 +18,7 @@ func newLookupCmd(ui *rwi.RWI) *cobra.Command {
 		Short: "Lookup Amazon Item",
 		Long:  "Lookup Amazon Item by ItemLookup Method",
 		RunE: func(cmd *cobra.Command, args []string) error {
-			//options
+			//oproperties for PA-API
 			id, err := cmd.Flags().GetString("item-id")
 			if err != nil {
 				return errors.Wrap(err, "--item-id")
@@ -34,10 +34,13 @@ func newLookupCmd(ui *rwi.RWI) *cobra.Command {
 			if err != nil {
 				return errors.Wrap(err, "--response-group")
 			}
+			//Output format
+			//XML format
 			xml, err := cmd.Flags().GetBool("xml")
 			if err != nil {
 				return errors.Wrap(err, "--xml")
 			}
+			//Template data
 			tf, err := cmd.Flags().GetString("template")
 			if err != nil {
 				return errors.Wrap(err, "--template")
@@ -52,7 +55,7 @@ func newLookupCmd(ui *rwi.RWI) *cobra.Command {
 				tr = file
 			}
 
-			//searching
+			//Lookup item
 			lookup := product.NewLookup(
 				product.NewAPI(
 					product.WithMarketplace(viper.GetString("marketplace")),
@@ -64,6 +67,7 @@ func newLookupCmd(ui *rwi.RWI) *cobra.Command {
 				product.WithResponseGroupForLookup(rg),
 			)
 			if xml {
+				//XML format (raw data)
 				s, err := lookup.ItemLookupXML(id)
 				if err != nil {
 					return err

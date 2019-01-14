@@ -4,6 +4,7 @@ import (
 	"io"
 	"os"
 	"strings"
+	"time"
 
 	"github.com/pkg/errors"
 	"github.com/spf13/cobra"
@@ -12,21 +13,64 @@ import (
 	"github.com/spiegel-im-spiegel/gocli/rwi"
 )
 
-//newSearchCmd returns cobra.Command instance for show sub-command
-func newSearchCmd(ui *rwi.RWI) *cobra.Command {
-	searchCmd := &cobra.Command{
-		Use:   "search [flags] keyword",
-		Short: "Search Amazon Items",
-		Long:  "Search Amazon Items by ItemSearch Method",
+const MAX_STAR = 5
+
+//Review is class of review data
+type Review struct {
+	Date        string
+	Rating      int
+	Star        [MAX_STAR]bool
+	Description string
+	Lookup      *product.Result
+}
+
+//newReviewCmd returns cobra.Command instance for show sub-command
+func newReviewCmd(ui *rwi.RWI) *cobra.Command {
+	reviewCmd := &cobra.Command{
+		Use:   "review [flags] description",
+		Short: "Make review data for Amazon item",
+		Long:  "Make review data for Amazon item, lookup item by ItemLookup Method",
 		RunE: func(cmd *cobra.Command, args []string) error {
+			rev := &Review{Date: time.Now().Format("2006-01-02")}
 			//oproperties for PA-API
-			si, err := cmd.Flags().GetString("search-index")
+			id, err := cmd.Flags().GetString("item-id")
 			if err != nil {
-				return errors.Wrap(err, "--search-index")
+				return errors.Wrap(err, "--item-id")
+			}
+			if len(id) == 0 {
+				return errors.Wrap(os.ErrInvalid, "No ItemId property")
+			}
+			t, err := cmd.Flags().GetString("id-type")
+			if err != nil {
+				return errors.Wrap(err, "--id-type")
 			}
 			rg, err := cmd.Flags().GetString("response-group")
 			if err != nil {
 				return errors.Wrap(err, "--response-group")
+			}
+			//Rating for Amazon product
+			rating, err := cmd.Flags().GetInt("rating")
+			if err != nil {
+				return errors.Wrap(err, "--rating")
+			}
+			if rating > MAX_STAR {
+				rating = MAX_STAR
+			} else if rating < 0 {
+				rating = 0
+			}
+			rev.Rating = rating
+			for i := 0; i < MAX_STAR; i++ {
+				if rating > i {
+					rev.Star[i] = true
+				}
+			}
+			//Date of review
+			dt, err := cmd.Flags().GetString("review-date")
+			if err != nil {
+				return errors.Wrap(err, "--review-date")
+			}
+			if len(dt) > 0 {
+				rev.Date = dt
 			}
 			//Template data
 			tf, err := cmd.Flags().GetString("template")
@@ -42,31 +86,36 @@ func newSearchCmd(ui *rwi.RWI) *cobra.Command {
 				defer file.Close()
 				tr = file
 			}
-			//keyword
-			if len(args) == 0 {
-				return errors.Wrap(os.ErrInvalid, "No Keyword property")
-			} else if len(args) > 1 {
+
+			//Description
+			if len(args) > 1 {
 				return errors.Wrap(os.ErrInvalid, strings.Join(args, " "))
+			} else if len(args) == 1 {
+				rev.Description = args[0]
+			} else {
+				w := &strings.Builder{}
+				io.Copy(w, ui.Reader())
+				rev.Description = w.String()
 			}
-			keyword := args[0]
-			//searching
-			srch := product.NewSrch(
+
+			//lookup item
+			lookup := product.NewLookup(
 				product.NewAPI(
 					product.WithMarketplace(viper.GetString("marketplace")),
 					product.WithAssociateTag(viper.GetString("associate-tag")),
 					product.WithAccessKey(viper.GetString("access-key")),
 					product.WithSecretKey(viper.GetString("secret-key")),
 				),
-				product.WithSearchIndexForSrch(si),
-				product.WithResponseGroupForSrch(rg),
+				product.WithIDTypeForLookup(t),
+				product.WithResponseGroupForLookup(rg),
 			)
-			items, err := srch.ItemSearch(keyword)
+			item, err := lookup.ItemLookup(id)
 			if err != nil {
 				return err
 			}
-
 			//output
-			r, err := format(items, tr)
+			rev.Lookup = item
+			r, err := format(rev, tr)
 			if err != nil {
 				return err
 			}
@@ -74,11 +123,14 @@ func newSearchCmd(ui *rwi.RWI) *cobra.Command {
 			return nil
 		},
 	}
-	searchCmd.Flags().StringP("search-index", "s", "All", "SearchIndex")
-	searchCmd.Flags().StringP("response-group", "g", "ItemAttributes,Small", "ResponseGroup")
-	searchCmd.Flags().StringP("template", "t", "", "Template file")
+	reviewCmd.Flags().StringP("response-group", "g", "Images,ItemAttributes,Small", "ResponseGroup")
+	reviewCmd.Flags().StringP("item-id", "d", "", "ItemId")
+	reviewCmd.Flags().StringP("id-type", "p", "ASIN", "IdType")
+	reviewCmd.Flags().IntP("rating", "r", 0, "Rating of product")
+	reviewCmd.Flags().StringP("review-date", "", "", "Date of review")
+	reviewCmd.Flags().StringP("template", "t", "", "Template file")
 
-	return searchCmd
+	return reviewCmd
 }
 
 /* MIT License
