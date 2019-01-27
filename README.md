@@ -1,5 +1,6 @@
 # [amazon-item] Searching Amazon Items, Powered by PA-API
 
+[![Build Status](https://travis-ci.org/spiegel-im-spiegel/amazon-item.svg?branch=master)](https://travis-ci.org/spiegel-im-spiegel/amazon-item)
 [![GitHub license](http://img.shields.io/badge/license-MIT-blue.svg)](https://raw.githubusercontent.com/spiegel-im-spiegel/amazon-item/master/LICENSE)
 [![GitHub release](http://img.shields.io/github/release/spiegel-im-spiegel/amazon-item.svg)](https://github.com/spiegel-im-spiegel/amazon-item/releases/latest)
 
@@ -111,20 +112,22 @@ access-key: AKIAIOSFODNN7EXAMPLE
 secret-key: 1234567890
 
 $ cat template/item-list.md
-| ASIN | Title | Author | Binding | EAN | Publisher | PublicationDate | URL |
-| ---- | ----- | ------ | ------- | --- | --------- | --------------- | --- |
-{{ range .Items }}| {{ .ASIN }} | {{ .ItemAttributes.Title }} | {{ range .ItemAttributes.Author }} {{ . }}{{ end }} | {{ .ItemAttributes.Binding }} | {{ .ItemAttributes.EAN }} | {{ .ItemAttributes.Publisher }} | {{ .ItemAttributes.ReleaseDate }} | {{ .URL }} |
+| ASIN | Title | Author | Binding | Publisher | PublicationDate | URL |
+| ---- | ----- | ------ | ------- | --------- | --------------- | --- |
+{{ range .Items }}| {{ .ASIN }} | {{ .ItemAttributes.Title }} | {{ range .ItemAttributes.Author }} {{ . }}{{ end }} | {{ .ItemAttributes.Binding }} | {{ .ItemAttributes.Publisher }} | {{ .ItemAttributes.PublicationDate }} | {{ .URL }} |
 {{ end }}
 
 $ amazon-item search -t template/item-list.md 数学ガール+フェルマーの最終定理+kindle
-| ASIN | Title | Author | Binding | EAN | Publisher | PublicationDate | URL |
-| ---- | ----- | ------ | ------- | --- | --------- | --------------- | --- |
-| B00AXUD4EQ | 数学ガール　フェルマーの最終定理　1 (MFコミックス　フラッパーシリーズ) |  春日旬 | Kindle版 |  | KADOKAWA / メディアファクトリー | 2012-12-19 | https://www.amazon.co.jp/exec/obidos/ASIN/B00AXUD4EQ/mytag-20 |
-| B00I8AT1CM | 数学ガール／フェルマーの最終定理 |  結城 浩 | Kindle版 |  | SBクリエイティブ | 2014-03-12 | https://www.amazon.co.jp/exec/obidos/ASIN/B00I8AT1CM/mytag-20 |
-| B00DONBQAI | 数学ガール　フェルマーの最終定理　3 (MFコミックス　フラッパーシリーズ) |  春日 旬 | Kindle版 |  | KADOKAWA / メディアファクトリー | 2013-06-27 | https://www.amazon.co.jp/exec/obidos/ASIN/B00DONBQAI/mytag-20 |
-| B00AXUD4F0 | 数学ガール　フェルマーの最終定理　2 (MFコミックス　フラッパーシリーズ) |  春日旬 | Kindle版 |  | KADOKAWA / メディアファクトリー | 2012-12-19 | https://www.amazon.co.jp/exec/obidos/ASIN/B00AXUD4F0/mytag-20 |
-| B0756XMQBN | 数学ガール フェルマーの最終定理 |  春日旬 春日 旬 | Kindle版 |  |  |  | https://www.amazon.co.jp/exec/obidos/ASIN/B0756XMQBN/mytag-20 |
-| B00ZEIEY1E | [まとめ買い] 数学ガール　フェルマーの最終定理（コミックフラッパー） |  春日旬 春日 旬 | Kindle版 |  |  |  | https://www.amazon.co.jp/exec/obidos/ASIN/B00ZEIEY1E/mytag-20 |
+| ASIN | Title | Author | Binding | Publisher | PublicationDate | URL |
+| ---- | ----- | ------ | ------- | --------- | --------------- | --- |
+| B00AXUD4EQ | 数学ガール　フェルマーの最終定理　1 (MFコミックス　フラッパーシリーズ) |  春日旬 | Kindle版 | KADOKAWA / メディアファクトリー | 2012-11-01 | https://www.amazon.co.jp/exec/obidos/ASIN/B00AXUD4EQ/mytag-20 |
+| B00I8AT1CM | 数学ガール／フェルマーの最終定理 |  結城 浩 | Kindle版 | SBクリエイティブ | 2008-07-29 | https://www.amazon.co.jp/exec/obidos/ASIN/B00I8AT1CM/mytag-20 |
+| B00DONBQAI | 数学ガール　フェルマーの最終定理　3 (MFコミックス　フラッパーシリーズ) |  春日 旬 | Kindle版 | KADOKAWA / メディアファクトリー | 2013-06-27 | https://www.amazon.co.jp/exec/obidos/ASIN/B00DONBQAI/mytag-20 |
+| B00AXUD4F0 | 数学ガール　フェルマーの最終定理　2 (MFコミックス　フラッパーシリーズ) |  春日旬 | Kindle版 | KADOKAWA / メディアファクトリー | 2012-11-01 | https://www.amazon.co.jp/exec/obidos/ASIN/B00AXUD4F0/mytag-20 |
+| B009T4TN7Y | 数学ガール　上 (MFコミックス　フラッパーシリーズ) |  日坂 水柯 結城 浩 | Kindle版 | KADOKAWA / メディアファクトリー | 2012-09-01 | https://www.amazon.co.jp/exec/obidos/ASIN/B009T4TN7Y/mytag-20 |
+| B009T4TNB0 | 数学ガール　下 (MFコミックス　フラッパーシリーズ) |  日坂 水柯 結城 浩 | Kindle版 | KADOKAWA / メディアファクトリー | 2012-09-01 | https://www.amazon.co.jp/exec/obidos/ASIN/B009T4TNB0/mytag-20 |
+| B0756XMQBN | 数学ガール フェルマーの最終定理 |  春日旬 春日 旬 | Kindle版 |  |  | https://www.amazon.co.jp/exec/obidos/ASIN/B0756XMQBN/mytag-20 |
+| B00ZEIEY1E | [まとめ買い] 数学ガール　フェルマーの最終定理（コミックフラッパー） |  春日旬 春日 旬 | Kindle版 |  |  | https://www.amazon.co.jp/exec/obidos/ASIN/B00ZEIEY1E/mytag-20 |
 ```
 
 ### Lookup an item
@@ -147,12 +150,13 @@ $ cat template/lookup.md
   <div class="photo"><a class="item url" href="{{ .URL }}"><img src="{{ .MediumImage.URL }}" width="{{ .MediumImage.Width }}" alt="photo"></a></div>
   <dl class="fn">
     <dt><a href="{{ .URL }}">{{ .ItemAttributes.Title }}</a></dt>
-    <dd>{{ .ItemAttributes.Author }}</dd>
+    {{ if .ItemAttributes.Author }}<dd>{{ range $i, $v := .ItemAttributes.Author }}{{ if ne $i 0 }}, {{ end }}{{ $v }}{{ end }}</dd>{{ end }}{{ if .ItemAttributes.Creator }}
+	<dd>{{ range $i, $v := .ItemAttributes.Creator }}{{ if ne $i 0 }}, {{ end }}{{ $v.Value }}{{ with $v.Role }} ({{ . }}){{ end }}{{ end }}</dd>{{ end }}
     <dd>{{ .ItemAttributes.Publisher }}{{ with .ItemAttributes.PublicationDate }} {{ . }}{{ end }}{{ with .ItemAttributes.ReleaseDate }} (Release {{ . }}){{ end }}</dd>
     <dd>{{ .ItemAttributes.ProductGroup }} {{ .ItemAttributes.Binding }}</dd>
-    <dd>ASIN: {{ .ASIN }}{{ with .ItemAttributes.EAN }}, EAN: {{ . }}{{ end }}</dd>
+    <dd>ASIN: {{ .ASIN }}{{ with .ItemAttributes.EAN }}, EAN: {{ . }}{{ end }}{{ with .ItemAttributes.EISBN }}, EISBN: {{ . }}{{ end }}</dd>
   </dl>
-  <p class="powered-by" >reviewed by <a href='#maker' class='reviewer'>Spiegel</a> on <abbr class="dtreviewed" title="{{ $.Today }}">{{ $.Today }}</abbr> (powered by <a href="{{ $.AppURL }}" >{{ $.AppName }}</a> {{ $.AppVersion }})</p>
+  <p class="powered-by" >reviewed by <a href='#maker' class='reviewer'>mytag-20</a> on <abbr class="dtreviewed" title="{{ $.Today }}">{{ $.Today }}</abbr> (powered by <a href="{{ $.AppURL }}" >{{ $.AppName }}</a> {{ $.AppVersion }})</p>
 </div>{{ end }}
 
 $ amazon-item lookup -d B00I8AT1CM -t template/lookup.html
@@ -165,7 +169,7 @@ $ amazon-item lookup -d B00I8AT1CM -t template/lookup.html
     <dd>eBooks Kindle版</dd>
     <dd>ASIN: B00I8AT1CM</dd>
   </dl>
-  <p class="powered-by" >reviewed by <a href='#maker' class='reviewer'>Spiegel</a> on <abbr class="dtreviewed" title="2019-01-13">2019-01-13</abbr> (powered by <a href="https://github.com/spiegel-im-spiegel/amazon-item" >amazon-item</a> v0.1.0)</p>
+  <p class="powered-by" >reviewed by <a href='#maker' class='reviewer'>mytag-20</a> on <abbr class="dtreviewed" title="2019-01-27">2019-01-27</abbr> (powered by <a href="https://github.com/spiegel-im-spiegel/amazon-item" >amazon-item</a> v0.2.1)</p>
 </div>
 ```
 
@@ -188,11 +192,11 @@ $ cat template/lookup.md
 {{ range .Lookup.Items }}<div class="hreview">
   <div class="photo"><a class="item url" href="{{ .URL }}"><img src="{{ .MediumImage.URL }}" width="{{ .MediumImage.Width }}" alt="photo"></a></div>
   <dl class="fn">
-    <dt><a href="{{ .URL }}">{{ .ItemAttributes.Title }}</a></dt>
-	<dd>{{ .ItemAttributes.Author }}</dd>
+    <dt><a href="{{ .URL }}">{{ .ItemAttributes.Title }}</a></dt>{{ if .ItemAttributes.Author }}
+	<dd>{{ range $i, $v := .ItemAttributes.Author }}{{ if ne $i 0 }}, {{ end }}{{ $v }}{{ end }}</dd>{{ end }}
     <dd>{{ .ItemAttributes.Publisher }}{{ with .ItemAttributes.PublicationDate }} {{ . }}{{ end }}{{ with .ItemAttributes.ReleaseDate }} (Release {{ . }}){{ end }}</dd>
     <dd>{{ .ItemAttributes.ProductGroup }} {{ .ItemAttributes.Binding }}</dd>
-    <dd>ASIN: {{ .ASIN }}{{ with .ItemAttributes.EAN }}, EAN: {{ . }}{{ end }}</dd>{{ if gt $.Rating 0 }}
+    <dd>ASIN: {{ .ASIN }}{{ with .ItemAttributes.EAN }}, EAN: {{ . }}{{ end }}{{ with .ItemAttributes.EISBN }}, EISBN: {{ . }}{{ end }}</dd>{{ if gt $.Rating 0 }}
     <dd>評価<abbr class="rating fa-sm" title="{{ $.Rating }}">{{ range $.Star }}&nbsp;{{ if . }}<i class="fas fa-star"></i>{{ else }}<i class="far fa-star"></i>{{ end }}{{ end }}</abbr></dd>{{ end }}
   </dl>
   <p class="description">{{ $.Description }}</p>
@@ -201,18 +205,17 @@ $ cat template/lookup.md
 
 $ amazon-item review -d B00I8AT1CM -r 4 -t template/review.html Description
 <div class="hreview">
-  <div class="photo"><a class="item url" href="https://www.amazon.co.jp/exec/obidos/ASIN/B00I8AT1CM/mytag-20><img src="https://images-fe.ssl-images-amazon.com/images/I/41vT2D6sERL._SL160_.jpg" width="113" alt="photo"></a></div>
+  <div class="photo"><a class="item url" href="https://www.amazon.co.jp/exec/obidos/ASIN/B00I8AT1CM/mytag-20"><img src="https://images-fe.ssl-images-amazon.com/images/I/41vT2D6sERL._SL160_.jpg" width="113" alt="photo"></a></div>
   <dl class="fn">
-    <dt><a href="https://www.amazon.co.jp/exec/obidos/ASIN/B00I8AT1CM/mytag-20>数学ガール／フェルマーの最終定理</a></dt>
-        <dd>結城 浩</dd>
+    <dt><a href="https://www.amazon.co.jp/exec/obidos/ASIN/B00I8AT1CM/mytag-20">数学ガール／フェルマーの最終定理</a></dt>
+	<dd>結城 浩</dd>
     <dd>SBクリエイティブ 2008-07-29 (Release 2014-03-12)</dd>
     <dd>eBooks Kindle版</dd>
     <dd>ASIN: B00I8AT1CM</dd>
-    <dd>評価<abbr class="rating fa-sm" title="4">&nbsp;<i class="fas fa-star"></i>&nbsp;<i class="fas fa-star"></i>&nbsp;<i class="fas fa-s
-tar"></i>&nbsp;<i class="fas fa-star"></i>&nbsp;<i class="far fa-star"></i></abbr></dd>
+    <dd>評価<abbr class="rating fa-sm" title="4">&nbsp;<i class="fas fa-star"></i>&nbsp;<i class="fas fa-star"></i>&nbsp;<i class="fas fa-star"></i>&nbsp;<i class="fas fa-star"></i>&nbsp;<i class="far fa-star"></i></abbr></dd>
   </dl>
   <p class="description">Description</p>
-  <p class="powered-by" >reviewed by <a href='#maker' class='reviewer'>mytag-20</a> on <abbr class="dtreviewed" title="2019-01-13">2019-01-13</abbr> (powered by <a href="https://github.com/spiegel-im-spiegel/amazon-item" >amazon-item</a> v0.2.0)</p>
+  <p class="powered-by" >reviewed by <a href='#maker' class='reviewer'>mytag-20</a> on <abbr class="dtreviewed" title="2019-01-27">2019-01-27</abbr> (powered by <a href="https://github.com/spiegel-im-spiegel/amazon-item" >amazon-item</a> v0.2.1)</p>
 </div>
 ```
 
