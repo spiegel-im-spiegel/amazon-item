@@ -5,7 +5,7 @@ import (
 	"strconv"
 	"time"
 
-	amazonproduct "github.com/DDRBoxman/go-amazon-product-api"
+	amazonproduct "github.com/spiegel-im-spiegel/go-amazon-product-api" //replace from github.com/DDRBoxman/go-amazon-product-api (temporary)
 )
 
 //Srch is class for ItemSearch method

@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"time"
 
-	amazonproduct "github.com/DDRBoxman/go-amazon-product-api"
+	amazonproduct "github.com/spiegel-im-spiegel/go-amazon-product-api" //replace from github.com/DDRBoxman/go-amazon-product-api (temporary)
 )
 
 //Result is dataset for result of SearchItem

@@ -6,7 +6,7 @@
 	<dd>{{ range $i, $v := .ItemAttributes.Creator }}{{ if ne $i 0 }}, {{ end }}{{ $v.Value }}{{ with $v.Role }} ({{ . }}){{ end }}{{ end }}</dd>{{ end }}
     <dd>{{ .ItemAttributes.Publisher }}{{ with .ItemAttributes.PublicationDate }} {{ . }}{{ end }}{{ with .ItemAttributes.ReleaseDate }} (Release {{ . }}){{ end }}</dd>
     <dd>{{ .ItemAttributes.ProductGroup }} {{ .ItemAttributes.Binding }}</dd>
-    <dd>ASIN: {{ .ASIN }}{{ with .ItemAttributes.EAN }}, EAN: {{ . }}{{ end }}</dd>
+    <dd>ASIN: {{ .ASIN }}{{ with .ItemAttributes.EAN }}, EAN: {{ . }}{{ end }}{{ with .ItemAttributes.EISBN }}, EISBN: {{ . }}{{ end }}</dd>
   </dl>
   <p class="powered-by" >reviewed by <a href='#maker' class='reviewer'>mytag-20</a> on <abbr class="dtreviewed" title="{{ $.Today }}">{{ $.Today }}</abbr> (powered by <a href="{{ $.AppURL }}" >{{ $.AppName }}</a> {{ $.AppVersion }})</p>
 </div>{{ end }}

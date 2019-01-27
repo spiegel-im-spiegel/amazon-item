@@ -5,7 +5,7 @@
 	<dd>{{ range $i, $v := .ItemAttributes.Author }}{{ if ne $i 0 }}, {{ end }}{{ $v }}{{ end }}</dd>{{ end }}
     <dd>{{ .ItemAttributes.Publisher }}{{ with .ItemAttributes.PublicationDate }} {{ . }}{{ end }}{{ with .ItemAttributes.ReleaseDate }} (Release {{ . }}){{ end }}</dd>
     <dd>{{ .ItemAttributes.ProductGroup }} {{ .ItemAttributes.Binding }}</dd>
-    <dd>ASIN: {{ .ASIN }}{{ with .ItemAttributes.EAN }}, EAN: {{ . }}{{ end }}</dd>{{ if gt $.Rating 0 }}
+    <dd>ASIN: {{ .ASIN }}{{ with .ItemAttributes.EAN }}, EAN: {{ . }}{{ end }}{{ with .ItemAttributes.EISBN }}, EISBN: {{ . }}{{ end }}</dd>{{ if gt $.Rating 0 }}
     <dd>評価<abbr class="rating fa-sm" title="{{ $.Rating }}">{{ range $.Star }}&nbsp;{{ if . }}<i class="fas fa-star"></i>{{ else }}<i class="far fa-star"></i>{{ end }}{{ end }}</abbr></dd>{{ end }}
   </dl>
   <p class="description">{{ $.Description }}</p>
