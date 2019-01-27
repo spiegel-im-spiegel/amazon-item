@@ -48,7 +48,7 @@ func newLookupCmd(ui *rwi.RWI) *cobra.Command {
 			var tr io.Reader
 			if len(tf) > 0 && !xml {
 				file, err2 := os.Open(tf)
-				if err != nil {
+				if err2 != nil {
 					return err2
 				}
 				defer file.Close()
