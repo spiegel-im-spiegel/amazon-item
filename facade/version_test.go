@@ -14,7 +14,7 @@ func TestVersionNormal(t *testing.T) {
 		out    string
 		outErr string
 	}{
-		{args: []string{"version"}, out: "", outErr: "amazon-item v0.1.0\n"},
+		{args: []string{"version"}, out: "", outErr: "amazon-item v0.2.1\n"},
 	}
 
 	for _, tc := range testCases {
