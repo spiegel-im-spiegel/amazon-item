@@ -3,7 +3,7 @@ package product
 import (
 	"net/http"
 
-	amazonproduct "github.com/spiegel-im-spiegel/go-amazon-product-api" //replace from github.com/DDRBoxman/go-amazon-product-api (temporary)
+	amazonproduct "github.com/DDRBoxman/go-amazon-product-api"
 )
 
 //API is interface class for github.com/DDRBoxman/go-amazon-product-api

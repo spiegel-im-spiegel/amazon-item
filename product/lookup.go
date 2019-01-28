@@ -5,7 +5,7 @@ import (
 	"errors"
 	"time"
 
-	amazonproduct "github.com/spiegel-im-spiegel/go-amazon-product-api" //replace from github.com/DDRBoxman/go-amazon-product-api (temporary)
+	amazonproduct "github.com/DDRBoxman/go-amazon-product-api"
 )
 
 //Lookup is class for ItemLookup method
